@@ -1,20 +1,19 @@
 const express = require('express');
 const router = express.Router();
 const handleSolveMath = (expression, res) => {
-  let result;
   const val = expression.replace(/sqrt/g, 'Math.sqrt')
   const operation = /^([ 0-9()+*/.,-]|Math.sqrt)+$/;
   const value = operation.test(val);
   if (value) {
     try {
-      result = res.status(200).send((eval(val)).toString());
+      const precision = eval(val).toFixed(2)
+      return res.status(200).send((presicion).toString());
     } catch (err) {
-      result = res.status(400).send('Invalid operation', err);
+      return res.status(400).send('Invalid operation', err);
     }
   } else {
-    result = res.status(400).send('Invalid operation');
+    return res.status(400).send('Invalid operation');
   }
-  return result;
 };
 //the get method solves any mathematical operation that comes by parameter, first validates that it is an expression and then solves the operation
 router.get('/api/calculator', (req, res) => {
